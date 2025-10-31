@@ -1,6 +1,9 @@
 import { Eye, EyeOff, Mail, MessageSquare, User, Lock, Loader } from "lucide-react"
 import { useState } from "react"
-import { useAuthStore } from "../store/useAuthStore"
+import {Link} from "react-router-dom"
+import { useAuthStore } from "../store/useAuthStore.js"
+import AuthImagePattern from "../components/AuthImagePattern"
+import toast from "react-hot-toast"
 
 
 const SignUpPage = () => {
@@ -13,11 +16,23 @@ const SignUpPage = () => {
   })
   const {signup, isSigningUp} = useAuthStore();
 
-  const validateForm = () => {}
+  const validateForm = () => {
+    if(!formData.fullName.trim()) return toast.error("Full name is required");
+    if(!formData.email.trim()) return toast.error("Email is required");
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) return toast.error("Invalid email format");
+    if(!formData.password) return toast.error("Password is reqired");
+    if(formData.password.length <6) return toast.error("password must be at least 6 characters");
+
+    return true
+  }
 
   const handleSubmit = (e) => {
-    e.preventDefault()
-  }
+    e.preventDefault();
+
+    const success = validateForm()
+
+    if(success === true) signup(formData)
+  };
 
   return (
     <div className="min-h-screen grid lg:grid-cols-2">
@@ -116,7 +131,7 @@ const SignUpPage = () => {
                 </div>
               </div>
 
-              <button type="button" className="btn btn-primary w-full" disabled={isSigningUp}>
+              <button type="submit" className="btn btn-primary w-full" disabled={isSigningUp}>
                        {isSigningUp ? (
                         <>
                         <Loader className="size-5 animate-spin"/>
@@ -129,12 +144,31 @@ const SignUpPage = () => {
               </button>
 
                   
-
          </form>
+
+         <div className="text-center">
+              <p className="text-base-content/60">
+                Already have an account?{""}
+                <Link to="/login" className="link link-primary">
+                Sign in
+                </Link>
+              </p>
+         </div>
+
 
         </div>
 
       </div>
+
+        {/* right side  */}
+
+        <AuthImagePattern
+        title = "Join our community"
+         subtitle = "Connect with friends, share moments, and stay in touch with your loved ones."
+        />
+
+
+
 
     </div>
   )
