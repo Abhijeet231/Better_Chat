@@ -28,3 +28,6 @@ To deepen my understanding of WebSockets and build a fully functional real-time 
 ---
 
 > This project is a learning journey — more updates coming soon! ✨
+
+
+https://chatgpt.com/s/t_69078d3185208191b8b92fdedc610c85
