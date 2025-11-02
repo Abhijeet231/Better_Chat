@@ -1,4 +1,4 @@
-import express from "express";
+import express, { urlencoded } from "express";
 import dotenv from "dotenv";
 import {connectDB} from "./lib/db.js"
 import cookieParser from "cookie-parser"
@@ -15,6 +15,7 @@ const PORT = process.env.PORT;
 
 app.use(express.json());
 app.use(cookieParser());
+app.use(urlencoded({extended:true}))
 app.use(cors(
     {
         origin: "http://localhost:5173",
